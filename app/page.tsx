@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Screen = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
@@ -11,6 +11,12 @@ export default function Home() {
   const dragStart = useRef<number | null>(null);
   const dragDistance = useRef(0);
   const dragLimit = useRef(0);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => undefined);
+    }
+  }, []);
 
   function completeSwipe() {
     setUsedAt(new Date());
